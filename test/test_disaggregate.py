@@ -1,4 +1,6 @@
 import numpy as np
+import geopandas as gpd
+
 from gregor.disaggregate import (
     disaggregate_polygon_to_point,
     disaggregate_polygon_to_raster,
@@ -8,6 +10,9 @@ from fixtures import (
     points,
     square_segmentation_2x2,
     square_segmentation_3x3,
+    demand_NUTS0_NL,
+    raster_NL,
+    points_NL,
 )
 
 def test_disaggregate_2x2(dummy_raster, square_segmentation_2x2):
@@ -49,3 +54,20 @@ def test_dissagregate_to_point(square_segmentation_2x2, points):
     )
 
     assert disaggregated["disaggregated"].sum() == 13
+
+
+def test_dissagregate_NL_to_raster(demand_NUTS0_NL, raster_NL):
+    disaggregated = disaggregate_polygon_to_raster(
+        data=demand_NUTS0_NL,
+        column="FC_OTH_HH_E",
+        proxy=raster_NL,
+    )
+
+
+def test_dissagregate_NL_to_point(demand_NUTS0_NL, points_NL):
+    disaggregated = disaggregate_polygon_to_point(
+        data=demand_NUTS0_NL,
+        column="FC_OTH_HH_E",
+        proxy=points_NL,
+        proxy_column="pop_max"
+    )
