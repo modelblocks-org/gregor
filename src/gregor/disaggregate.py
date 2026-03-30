@@ -12,6 +12,7 @@ def disaggregate_polygon_to_raster(
     data: gpd.GeoDataFrame,
     column: str,
     proxy: xr.DataArray,
+    use_dask: bool = False,
     chunk_size: int = 1024,
     to_data_crs: bool = False,
 ) -> xr.DataArray:
@@ -27,8 +28,13 @@ def disaggregate_polygon_to_raster(
         Name of the attribute in `data` to disaggregate.
     proxy : xr.DataArray
         Raster whose intensities act as weights.
+    use_dask : bool, default False
+        Whether to use dask for the computations. If True, the function will
+        return a dask-backed xarray DataArray. Recommended for large rasters
+        that do not fit into memory.
     chunk_size : int, default 1024
-        Square chunk edge length for the proxy and ID rasters.
+        Needed when use_dask is True. Square chunk edge length for the proxy
+        and ID rasters.
     to_data_crs : bool, default False
         If True, reprojects the output raster back to `data`'s CRS.
 
@@ -67,15 +73,15 @@ def disaggregate_polygon_to_raster(
         )
         _data = _data.to_crs(_proxy.rio.crs)
 
-    # convert _proxy to chunked DataArray in float32
-    _proxy = _proxy.astype("float32").chunk({"y": chunk_size, "x": chunk_size})
+    if use_dask:
+        # convert _proxy to chunked DataArray in float32
+        _proxy = _proxy.astype("float32").chunk({"y": chunk_size, "x": chunk_size})
 
     # prepare normalisation, which is the sum of proxy values inside a polygon
     normalisation = aggregate_raster_to_polygon(_proxy, _data, stats=["sum"])
 
     # set up look up array
     # allocate extra slot (nodata) that will later propagate NaN outside given geometries
-
     # data_values contains the original data defined on polygons and a nodata.
     data_values = _data[column].astype("float32").values
     data_values = np.append(data_values, np.nan)
@@ -89,13 +95,18 @@ def disaggregate_polygon_to_raster(
     # create belongs_to matrix with nodata being the last index in value_lookup
     id_nodata = len(value_lookup) - 1  # index of nodata in value_lookup
     belongs_to = get_belongs_to_matrix(_proxy, _data.geometry, nodata=id_nodata)
-    belongs_to = belongs_to.chunk(_proxy.chunks)
+    if use_dask:
+        belongs_to = belongs_to.chunk(_proxy.chunks)
     belongs_to = belongs_to.data.astype("int32")
 
     # map lookup function to blocks using dask.array.map_blocks
-    def lookup_func(blk):
-        return value_lookup[blk]
-    val_pix = da.map_blocks(lookup_func, belongs_to, dtype="float32")
+    if use_dask:
+        def lookup_func(blk):
+            return value_lookup[blk]
+        val_pix = da.map_blocks(lookup_func, belongs_to, dtype="float32")
+
+    else:
+        val_pix = value_lookup[belongs_to]
 
     # compute final raster data
     raster_data = _proxy.data * val_pix
