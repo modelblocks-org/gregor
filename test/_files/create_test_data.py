@@ -2,7 +2,6 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
-
 from shapely.geometry import Point, Polygon
 
 
@@ -55,7 +54,7 @@ def get_index(resolution):
     index = np.rot90(index)
     index = index.flatten().tolist()
     index.reverse()
-    
+
     return index
 
 if __name__ == "__main__":

@@ -1,12 +1,12 @@
-import pandas as pd
-
-from pathlib import Path
-import pytest
-import geopandas as gpd
-import rioxarray as rxr
 import shutil
-from urllib.request import urlretrieve
 import zipfile
+from pathlib import Path
+from urllib.request import urlretrieve
+
+import geopandas as gpd
+import pandas as pd
+import pytest
+import rioxarray as rxr
 
 
 @pytest.fixture

@@ -1,6 +1,4 @@
 import numpy as np
-import geopandas as gpd
-
 from gregor.disaggregate import (
     disaggregate_polygon_to_point,
     disaggregate_polygon_to_raster,

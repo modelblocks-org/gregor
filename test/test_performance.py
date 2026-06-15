@@ -1,6 +1,6 @@
-from gregor.disaggregate import disaggregate_polygon_to_raster
-import pytest
 import numpy as np
+import pytest
+from gregor.disaggregate import disaggregate_polygon_to_raster
 from memory_log import MemoryLogger
 
 
@@ -15,6 +15,6 @@ def test_performance_disaggregate_to_raster(large_raster, large_polygons):
         data=data,
         column="value",
         proxy=large_raster,
-    )    
+    )
     mlogger.stop()
     mlogger.save_csv("test/performance_disaggregate_to_raster.csv")

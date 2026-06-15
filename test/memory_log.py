@@ -1,8 +1,9 @@
 import csv
 import os
-import psutil
 import threading
 import time
+
+import psutil
 
 
 class MemoryLogger:
@@ -10,7 +11,7 @@ class MemoryLogger:
         """
         interval_sec: numeric
             Sampling interval in seconds
-        pid: int or None | None 
+        pid: int or None | None
             Process ID to monitor; defaults to current process
         """
         self.interval_sec = interval_sec
