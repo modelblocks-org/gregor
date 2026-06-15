@@ -36,7 +36,7 @@ def test_agg_tif_3x3(square_segmentation_3x3):
     agg_raster_poly = aggregate_raster_to_polygon(
         "test/_files/raster.tif", square_segmentation_3x3
     )
-    agg_raster_poly =  agg_raster_poly["sum"].to_numpy().reshape(3, 3)
+    agg_raster_poly = agg_raster_poly["sum"].to_numpy().reshape(3, 3)
 
     expected = [
         [2.50, 1.50, 1.00],

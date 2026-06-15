@@ -21,9 +21,7 @@ def test_disaggregate_2x2(dummy_raster, square_segmentation_2x2):
         data=data, column="value", proxy=dummy_raster
     )
 
-    assert (
-        disaggregated.coarsen(x=2, y=2).sum().values == [[2, 2], [2, 2]]
-    ).all()
+    assert (disaggregated.coarsen(x=2, y=2).sum().values == [[2, 2], [2, 2]]).all()
 
     assert np.allclose(disaggregated.values, expected)
 
@@ -59,5 +57,5 @@ def test_dissagregate_NL_to_point(demand_NUTS0_NL, points_NL):
         data=demand_NUTS0_NL,
         column="FC_OTH_HH_E",
         proxy=points_NL,
-        proxy_column="pop_max"
+        proxy_column="pop_max",
     )

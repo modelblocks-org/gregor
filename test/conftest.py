@@ -41,7 +41,9 @@ def points_NL():
 
 @pytest.fixture
 def raster_NL():
-    return rxr.open_rasterio("docs/examples/data/population_small.tif").squeeze(drop=True)
+    return rxr.open_rasterio("docs/examples/data/population_small.tif").squeeze(
+        drop=True
+    )
 
 
 @pytest.fixture
@@ -76,7 +78,9 @@ def large_test_files() -> Path:
 
 @pytest.fixture(scope="session")
 def large_raster(large_test_files):
-    return rxr.open_rasterio(large_test_files / "europe/proxies/rooftop_pv.tif").squeeze(drop=True)
+    return rxr.open_rasterio(
+        large_test_files / "europe/proxies/rooftop_pv.tif"
+    ).squeeze(drop=True)
 
 
 @pytest.fixture(scope="session")

@@ -54,7 +54,7 @@ def disaggregate_polygon_to_raster(
         )
 
     # check if proxy is a chunked dask array.
-    is_chunked_dask_array = getattr(_proxy, 'chunks', None) is not None
+    is_chunked_dask_array = getattr(_proxy, "chunks", None) is not None
 
     # make an internal copy of data with numerical index
     _data = data.copy()
@@ -93,6 +93,7 @@ def disaggregate_polygon_to_raster(
         # map lookup function to blocks using dask.array.map_blocks
         def lookup_func(blk):
             return value_lookup[blk]
+
         val_pix = da.map_blocks(lookup_func, belongs_to, dtype="float32")
 
     else:
@@ -116,7 +117,9 @@ def disaggregate_polygon_to_raster(
     return raster
 
 
-def get_belongs_to_matrix(raster: xr.DataArray, polygons: gpd.GeoSeries, nodata: int=-1) -> xr.DataArray:
+def get_belongs_to_matrix(
+    raster: xr.DataArray, polygons: gpd.GeoSeries, nodata: int = -1
+) -> xr.DataArray:
     r"""
     Get a matrix which indicates which polygon each raster point belongs to.
 
@@ -225,9 +228,9 @@ def disaggregate_polygon_to_point(
     )
 
     # Make sure that it belongs to only one polygon
-    assert points.belongs_to.apply(len).max() == 1, (
-        "Every Point should belong to exactly one polygon."
-    )
+    assert (
+        points.belongs_to.apply(len).max() == 1
+    ), "Every Point should belong to exactly one polygon."
     points.belongs_to = points.belongs_to.apply(lambda x: x[0])
 
     # Warn if there are polygons without points.
