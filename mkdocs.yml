@@ -1,5 +1,7 @@
 site_name: Gregor
 copyright: Copyright &copy; since 2024 (MIT licensed)
+site_url: https://gregor.readthedocs.io/en/latest/
+repo_url: https://github.com/modelblocks-org/gregor
 nav:
   - Getting started: index.md
   - Examples: 
