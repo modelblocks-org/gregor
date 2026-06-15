@@ -3,12 +3,7 @@ from gregor.disaggregate import (
     disaggregate_polygon_to_point,
     disaggregate_polygon_to_raster,
 )
-from fixtures import (
-    dummy_raster,
-    points,
-    square_segmentation_2x2,
-    square_segmentation_3x3,
-)
+
 
 def test_disaggregate_2x2(dummy_raster, square_segmentation_2x2):
     data = square_segmentation_2x2
@@ -26,11 +21,9 @@ def test_disaggregate_2x2(dummy_raster, square_segmentation_2x2):
         data=data, column="value", proxy=dummy_raster
     )
 
-    assert (
-        disaggregated.coarsen(x=2, y=2).sum()["value"].values == [[2, 2], [2, 2]]
-    ).all()
+    assert (disaggregated.coarsen(x=2, y=2).sum().values == [[2, 2], [2, 2]]).all()
 
-    assert np.allclose(disaggregated["value"].values, expected)
+    assert np.allclose(disaggregated.values, expected)
 
 
 def test_disaggregate_3x3():
@@ -49,3 +42,20 @@ def test_dissagregate_to_point(square_segmentation_2x2, points):
     )
 
     assert disaggregated["disaggregated"].sum() == 13
+
+
+def test_dissagregate_NL_to_raster(demand_NUTS0_NL, raster_NL):
+    disaggregate_polygon_to_raster(
+        data=demand_NUTS0_NL,
+        column="FC_OTH_HH_E",
+        proxy=raster_NL,
+    )
+
+
+def test_dissagregate_NL_to_point(demand_NUTS0_NL, points_NL):
+    disaggregate_polygon_to_point(
+        data=demand_NUTS0_NL,
+        column="FC_OTH_HH_E",
+        proxy=points_NL,
+        proxy_column="pop_max",
+    )

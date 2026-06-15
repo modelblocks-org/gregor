@@ -1,13 +1,6 @@
-import numpy as np
 import pytest
+from gregor.aggregate import aggregate_point_to_polygon, aggregate_raster_to_polygon
 from numpy.testing import assert_array_equal
-
-from gregor.aggregate import aggregate_raster_to_polygon
-from fixtures import (
-    dummy_raster,
-    square_segmentation_2x2,
-    square_segmentation_3x3,
-)
 
 
 def test_agg_tif_2x2(square_segmentation_2x2):
@@ -43,7 +36,7 @@ def test_agg_tif_3x3(square_segmentation_3x3):
     agg_raster_poly = aggregate_raster_to_polygon(
         "test/_files/raster.tif", square_segmentation_3x3
     )
-    agg_raster_poly =  agg_raster_poly["sum"].to_numpy().reshape(3, 3)
+    agg_raster_poly = agg_raster_poly["sum"].to_numpy().reshape(3, 3)
 
     expected = [
         [2.50, 1.50, 1.00],
@@ -71,3 +64,17 @@ def test_agg_array_3x3(square_segmentation_3x3, dummy_raster):
     ]
 
     assert_array_equal(agg_raster_poly, expected)
+
+
+def test_agg_raster_NL(raster_NL, polygons_NUTS3_NL):
+    aggregate_raster_to_polygon(
+        raster=raster_NL,
+        polygons=polygons_NUTS3_NL,
+    )
+
+
+def test_agg_point_NL(points_NL, polygons_NUTS3_NL):
+    aggregate_point_to_polygon(
+        points=points_NL,
+        polygons=polygons_NUTS3_NL,
+    )

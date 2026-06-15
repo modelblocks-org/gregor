@@ -72,3 +72,6 @@ select = [
 [tool.ruff.lint.isort]
 known-first-party = ["sampleproject"]
 lines-after-imports = 2
+
+[tool.pytest]
+markers = ["benchmark: Computationally expensive benchmark tests"]
