@@ -11,10 +11,12 @@ def test_performance_disaggregate_to_raster(large_raster, large_polygons):
     mlogger = MemoryLogger(interval_sec=0.5)
     mlogger.start()
 
+    large_raster_chunked = large_raster.chunk("auto")
+
     disaggregate_polygon_to_raster(
         data=data,
         column="value",
-        proxy=large_raster,
+        proxy=large_raster_chunked,
     )
     mlogger.stop()
     mlogger.save_csv("test/performance_disaggregate_to_raster.csv")
