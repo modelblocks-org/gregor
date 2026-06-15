@@ -67,14 +67,14 @@ def test_agg_array_3x3(square_segmentation_3x3, dummy_raster):
 
 
 def test_agg_raster_NL(raster_NL, polygons_NUTS3_NL):
-    agg_raster_poly = aggregate_raster_to_polygon(
+    aggregate_raster_to_polygon(
         raster=raster_NL,
         polygons=polygons_NUTS3_NL,
     )
 
 
 def test_agg_point_NL(points_NL, polygons_NUTS3_NL):
-    agg_point_poly = aggregate_point_to_polygon(
+    aggregate_point_to_polygon(
         points=points_NL,
         polygons=polygons_NUTS3_NL,
     )

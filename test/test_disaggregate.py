@@ -47,7 +47,7 @@ def test_dissagregate_to_point(square_segmentation_2x2, points):
 
 
 def test_dissagregate_NL_to_raster(demand_NUTS0_NL, raster_NL):
-    disaggregated = disaggregate_polygon_to_raster(
+    disaggregate_polygon_to_raster(
         data=demand_NUTS0_NL,
         column="FC_OTH_HH_E",
         proxy=raster_NL,
@@ -55,7 +55,7 @@ def test_dissagregate_NL_to_raster(demand_NUTS0_NL, raster_NL):
 
 
 def test_dissagregate_NL_to_point(demand_NUTS0_NL, points_NL):
-    disaggregated = disaggregate_polygon_to_point(
+    disaggregate_polygon_to_point(
         data=demand_NUTS0_NL,
         column="FC_OTH_HH_E",
         proxy=points_NL,
