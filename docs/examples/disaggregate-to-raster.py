@@ -27,6 +27,12 @@ boundaries_NUTS3 = gpd.read_file(PATH_DATA / "data/boundaries_NUTS3.geojson").se
 population = rxr.open_rasterio(PATH_DATA / "data/population_small.tif").squeeze()
 
 # %% [markdown]
+# To reduce the memory requirements later on, we chunk the population data using dask.
+# This is not strictly necessary, but it can help when working with large datasets.
+# We use `auto` chunking here, but you can also specify the chunk size manually.
+population = population.chunk("auto")
+
+# %% [markdown]
 # Here, we merge the demand data with the boundaries on country level, to connect the energy demand with the geometries.
 
 # %%
@@ -115,3 +121,4 @@ ax3.set_title("Disaggregated\nto raster")
 ax4.set_title("Aggregated\nto NUTS3")
 
 plt.show()
+# %%
