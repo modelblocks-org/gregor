@@ -5,15 +5,7 @@ from gregor.disaggregate import (
     disaggregate_polygon_to_point,
     disaggregate_polygon_to_raster,
 )
-from fixtures import (
-    dummy_raster,
-    points,
-    square_segmentation_2x2,
-    square_segmentation_3x3,
-    demand_NUTS0_NL,
-    raster_NL,
-    points_NL,
-)
+
 
 def test_disaggregate_2x2(dummy_raster, square_segmentation_2x2):
     data = square_segmentation_2x2

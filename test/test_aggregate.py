@@ -4,14 +4,6 @@ from numpy.testing import assert_array_equal
 import geopandas as gpd
 
 from gregor.aggregate import aggregate_raster_to_polygon, aggregate_point_to_polygon
-from fixtures import (
-    dummy_raster,
-    square_segmentation_2x2,
-    square_segmentation_3x3,
-    polygons_NUTS3_NL,
-    raster_NL,
-    points_NL,
-)
 
 
 def test_agg_tif_2x2(square_segmentation_2x2):

@@ -2,13 +2,6 @@ from numpy.testing import assert_array_equal
 
 from gregor.disaggregate import get_belongs_to_matrix
 
-from fixtures import (
-    dummy_raster,
-    square_segmentation_2x2,
-    square_segmentation_3x3,
-    polygon_segmentation,
-)
-
 
 def test_belongs_to_matrix_square_segmentation_2x2(dummy_raster, square_segmentation_2x2):
     expected = [
