@@ -55,10 +55,6 @@ plugins:
             inherited_members: true
             docstring_style: numpy
           paths: [src]
-          import:
-            - https://docs.python.org/3/objects.inv
-            - https://pandas.pydata.org/docs/objects.inv
-            - https://docs.xarray.dev/en/stable/objects.inv
 markdown_extensions:
   # Python Markdown
   - abbr
