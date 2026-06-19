@@ -151,44 +151,6 @@ def get_belongs_to_matrix(
     return xr.DataArray(arr, coords=raster.coords, dims=raster.dims)
 
 
-def get_uniform_proxy(
-    polygons: gpd.GeoSeries, raster_resolution: tuple[int, int]
-) -> xr.Dataset:
-    r"""
-    Get a uniform proxy which sums to one for each region.
-
-    Parameters
-    ----------
-    polygons : gpd.GeoSeries
-        Polygons to compute the proxy for.
-    raster_resolution : tuple[int, int]
-        Resolution of the desired raster proxy.
-
-    Returns
-    -------
-    xr.Dataset
-        Uniform proxy which sums to 1 in each region.
-    """
-    # get spatial extent of spatial_units
-    x_min, y_min, x_max, y_max = polygons.total_bounds
-
-    # define coords
-    x_coords = np.linspace(x_min, x_max, raster_resolution[0])
-    y_coords = np.linspace(y_min, y_max, raster_resolution[1])
-
-    # create raster Dataset
-    uniform_proxy = xr.Dataset(
-        data_vars={}, coords={"x": ("x", x_coords), "y": ("y", y_coords)}
-    )
-
-    # TODO Set transform and crs
-    # uniform_proxy = uniform_proxy.rio.set_spatial_dims('x', 'y')
-    # uniform_proxy = uniform_proxy.rio.write_transform()
-    uniform_proxy = uniform_proxy.rio.set_crs(polygons.crs)
-
-    return uniform_proxy
-
-
 def disaggregate_polygon_to_point(
     data: gpd.GeoDataFrame,
     column: str,
