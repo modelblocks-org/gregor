@@ -9,6 +9,7 @@ from rasterio.features import rasterize
 
 from gregor.aggregate import aggregate_raster_to_polygon
 
+
 logger = logging.getLogger(__name__)
 
 
