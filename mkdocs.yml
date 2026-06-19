@@ -1,5 +1,7 @@
 site_name: Gregor
 copyright: Copyright &copy; since 2024 (MIT licensed)
+site_url: https://gregor.readthedocs.io/en/latest/
+repo_url: https://github.com/modelblocks-org/gregor
 nav:
   - Getting started: index.md
   - Examples: 
@@ -53,10 +55,6 @@ plugins:
             inherited_members: true
             docstring_style: numpy
           paths: [src]
-          import:
-            - https://docs.python.org/3/objects.inv
-            - https://pandas.pydata.org/docs/objects.inv
-            - https://docs.xarray.dev/en/stable/objects.inv
 markdown_extensions:
   # Python Markdown
   - abbr
@@ -75,9 +73,6 @@ markdown_extensions:
       smart_enable: all
   - pymdownx.caret
   - pymdownx.details
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.keys
