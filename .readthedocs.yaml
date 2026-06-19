@@ -7,7 +7,7 @@ build:
     python: mambaforge-4.10
   jobs:
     post_create_environment:
-      - conda install python=3.12 --file requirements/dev.txt
+      - conda install python=3.12 --file requirements/docs.txt
       - pip install --no-deps .
 
 mkdocs:
