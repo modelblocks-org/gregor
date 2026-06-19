@@ -1,3 +1,5 @@
+import logging
+
 import dask.array as da
 import geopandas as gpd
 import numpy as np
@@ -6,6 +8,8 @@ import xarray as xr
 from rasterio.features import rasterize
 
 from gregor.aggregate import aggregate_raster_to_polygon
+
+logger = logging.getLogger(__name__)
 
 
 def disaggregate_polygon_to_raster(
@@ -62,7 +66,7 @@ def disaggregate_polygon_to_raster(
 
     # make sure that crs of data and proxy match
     if _proxy.rio.crs != _data.crs:
-        print(
+        logger.info(
             f"CRS of `data` ({_data.crs}) does not match CRS of `proxy` ({_proxy.rio.crs}). Reprojecting CRS of `data` to match `proxy`'s CRS."
         )
         _data = _data.to_crs(_proxy.rio.crs)
@@ -111,7 +115,7 @@ def disaggregate_polygon_to_raster(
     )
 
     if to_data_crs and _proxy.rio.crs != data.crs:
-        print(f"Reprojecting results to `data`'s CRS {data.crs}.")
+        logger.info(f"Reprojecting results to `data`'s CRS {data.crs}.")
         raster = raster.rio.reproject(data.crs)
 
     return raster
@@ -179,7 +183,7 @@ def disaggregate_polygon_to_point(
 
     # compare crs. If not the same, project data to proxy's crs
     if not proxy.crs == _data.crs:
-        print(
+        logger.info(
             f"CRS of `proxy` ({proxy.crs}) does not match CRS of `data` ({_data.crs}). Reprojecting CRS of `data` to `proxy`'s CRS."
         )
         _data = _data.to_crs(proxy.crs)
@@ -217,7 +221,7 @@ def disaggregate_polygon_to_point(
     points = points[["geometry", "disaggregated"]]
 
     if to_data_crs:
-        print(f"Reprojecting results to `data`'s CRS {_data.crs}.")
+        logger.info(f"Reprojecting results to `data`'s CRS {_data.crs}.")
         points = points.to_crs(_data.crs)
 
     return points
