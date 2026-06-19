@@ -58,7 +58,7 @@ ax2.set_title("City population")
 plt.show()
 
 # %% [markdown]
-# Now, we disaggregate the demand data using the population data as a proxy. The result is a raster dataset with the resolution of the proxy.
+# Now, we disaggregate the demand data using the population data as a proxy. The result is a raster with the resolution of the proxy.
 
 # %%
 demand_point = gregor.disaggregate.disaggregate_polygon_to_point(demand_geo, "FC_OTH_HH_E", cities, "pop_max")
