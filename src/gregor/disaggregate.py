@@ -42,8 +42,10 @@ def disaggregate_polygon_to_raster(
         _proxy = proxy
     elif isinstance(proxy, xr.Dataset):
         if len(proxy.data_vars) == 1:
-            raise DeprecationWarning(
-                "Passing DataSet is deprecated and will be disallowed in the future. Use DataArray instead."
+            warnings.warn(
+                "Passing DataSet is deprecated and will be disallowed in the future. Use DataArray instead.",
+                DeprecationWarning,
+                stacklevel=2,
             )
             var_name = next(iter(proxy.data_vars))
             _proxy = proxy[var_name]
