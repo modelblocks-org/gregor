@@ -18,6 +18,10 @@ Alternatively, install an editable local version in an environment by cloning th
 
 Please have a look at the examples presented in the [documentation](https://gregor.readthedocs.io/en/latest/). 
 
+## How to cite
+
+If you use Gregor, please cite it using the metadata provided in [`CITATION.CFF`](https://github.com/modelblocks-org/gregor/blob/main/CITATION.cff).
+
 ## Development
 
-If you encounter a bug, consider opening an issue on [GitHub](https://github.com/jnnr/gregor/issues).
+If you encounter a bug, consider opening an issue on [GitHub](https://github.com/modelblocks-org/gregor/issues).
