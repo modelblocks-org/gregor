@@ -1,5 +1,6 @@
-from gregor.disaggregate import get_belongs_to_matrix
 from numpy.testing import assert_array_equal
+
+from gregor.disaggregate import get_belongs_to_matrix
 
 
 def test_belongs_to_matrix_square_segmentation_2x2(

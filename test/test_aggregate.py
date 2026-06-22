@@ -1,6 +1,7 @@
 import pytest
-from gregor.aggregate import aggregate_point_to_polygon, aggregate_raster_to_polygon
 from numpy.testing import assert_array_equal
+
+from gregor.aggregate import aggregate_point_to_polygon, aggregate_raster_to_polygon
 
 
 def test_agg_tif_2x2(square_segmentation_2x2):
