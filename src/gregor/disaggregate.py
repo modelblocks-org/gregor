@@ -93,7 +93,8 @@ def disaggregate_polygon_to_raster(
     id_nodata = len(value_lookup) - 1  # index of nodata in value_lookup
     belongs_to = get_belongs_to_matrix(_proxy, _data.geometry, nodata=id_nodata)
     if is_chunked_dask_array:
-        belongs_to = belongs_to.chunk(_proxy.chunks)
+        chunks = {dim: chunk_size for dim, chunk_size in zip(_proxy.dims, _proxy.chunks)}
+        belongs_to = belongs_to.chunk(chunks)
     belongs_to = belongs_to.data.astype("int32")
 
     if is_chunked_dask_array:
