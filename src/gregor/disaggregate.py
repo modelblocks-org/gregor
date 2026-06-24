@@ -228,9 +228,9 @@ def disaggregate_polygon_to_point(
     )
 
     # Make sure that it belongs to only one polygon
-    assert (
-        points.belongs_to.apply(len).max() == 1
-    ), "Every Point should belong to exactly one polygon."
+    assert points.belongs_to.apply(len).max() == 1, (
+        "Every Point should belong to exactly one polygon."
+    )
     points.belongs_to = points.belongs_to.apply(lambda x: x[0])
 
     # Warn if there are polygons without points.
