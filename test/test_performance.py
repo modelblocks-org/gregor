@@ -1,7 +1,8 @@
 import numpy as np
 import pytest
-from gregor.disaggregate import disaggregate_polygon_to_raster
 from memory_log import MemoryLogger
+
+from gregor.disaggregate import disaggregate_polygon_to_raster
 
 
 @pytest.mark.benchmark

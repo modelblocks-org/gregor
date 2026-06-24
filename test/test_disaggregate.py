@@ -1,4 +1,5 @@
 import numpy as np
+
 from gregor.disaggregate import (
     disaggregate_polygon_to_point,
     disaggregate_polygon_to_raster,
