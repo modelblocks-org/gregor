@@ -1,4 +1,5 @@
 import logging
+import warnings
 
 import dask.array as da
 import geopandas as gpd
@@ -6,7 +7,6 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 from rasterio.features import rasterize
-import warnings
 
 from gregor.aggregate import aggregate_raster_to_polygon
 
