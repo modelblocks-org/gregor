@@ -6,7 +6,11 @@ Gregor is a tool that makes your life easier when aggregating and dis-aggregatin
 
 ## Installation
 
-Install the latest release from pypi using pip.
+Install the latest release via conda.
+
+    conda install --channel conda-forge gregor
+
+Or, if you prefer, install directly from PyPI using pip.
 
     pip install gregor
 
