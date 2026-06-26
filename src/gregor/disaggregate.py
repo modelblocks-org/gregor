@@ -1,3 +1,6 @@
+import logging
+import warnings
+
 import dask.array as da
 import geopandas as gpd
 import numpy as np
@@ -6,6 +9,9 @@ import xarray as xr
 from rasterio.features import rasterize
 
 from gregor.aggregate import aggregate_raster_to_polygon
+
+
+logger = logging.getLogger(__name__)
 
 
 def disaggregate_polygon_to_raster(
@@ -38,8 +44,10 @@ def disaggregate_polygon_to_raster(
         _proxy = proxy
     elif isinstance(proxy, xr.Dataset):
         if len(proxy.data_vars) == 1:
-            raise DeprecationWarning(
-                "Passing DataSet is deprecated and will be disallowed in the future. Use DataArray instead."
+            warnings.warn(
+                "Passing DataSet is deprecated and will be disallowed in the future. Use DataArray instead.",
+                DeprecationWarning,
+                stacklevel=2,
             )
             var_name = next(iter(proxy.data_vars))
             _proxy = proxy[var_name]
@@ -62,7 +70,7 @@ def disaggregate_polygon_to_raster(
 
     # make sure that crs of data and proxy match
     if _proxy.rio.crs != _data.crs:
-        print(
+        logger.info(
             f"CRS of `data` ({_data.crs}) does not match CRS of `proxy` ({_proxy.rio.crs}). Reprojecting CRS of `data` to match `proxy`'s CRS."
         )
         _data = _data.to_crs(_proxy.rio.crs)
@@ -86,7 +94,10 @@ def disaggregate_polygon_to_raster(
     id_nodata = len(value_lookup) - 1  # index of nodata in value_lookup
     belongs_to = get_belongs_to_matrix(_proxy, _data.geometry, nodata=id_nodata)
     if is_chunked_dask_array:
-        belongs_to = belongs_to.chunk(_proxy.chunks)
+        chunks = {
+            dim: chunk_size for dim, chunk_size in zip(_proxy.dims, _proxy.chunks)
+        }
+        belongs_to = belongs_to.chunk(chunks)
     belongs_to = belongs_to.data.astype("int32")
 
     if is_chunked_dask_array:
@@ -111,7 +122,7 @@ def disaggregate_polygon_to_raster(
     )
 
     if to_data_crs and _proxy.rio.crs != data.crs:
-        print(f"Reprojecting results to `data`'s CRS {data.crs}.")
+        logger.info(f"Reprojecting results to `data`'s CRS {data.crs}.")
         raster = raster.rio.reproject(data.crs)
 
     return raster
@@ -151,44 +162,6 @@ def get_belongs_to_matrix(
     return xr.DataArray(arr, coords=raster.coords, dims=raster.dims)
 
 
-def get_uniform_proxy(
-    polygons: gpd.GeoSeries, raster_resolution: tuple[int, int]
-) -> xr.Dataset:
-    r"""
-    Get a uniform proxy which sums to one for each region.
-
-    Parameters
-    ----------
-    polygons : gpd.GeoSeries
-        Polygons to compute the proxy for.
-    raster_resolution : tuple[int, int]
-        Resolution of the desired raster proxy.
-
-    Returns
-    -------
-    xr.Dataset
-        Uniform proxy which sums to 1 in each region.
-    """
-    # get spatial extent of spatial_units
-    x_min, y_min, x_max, y_max = polygons.total_bounds
-
-    # define coords
-    x_coords = np.linspace(x_min, x_max, raster_resolution[0])
-    y_coords = np.linspace(y_min, y_max, raster_resolution[1])
-
-    # create raster Dataset
-    uniform_proxy = xr.Dataset(
-        data_vars={}, coords={"x": ("x", x_coords), "y": ("y", y_coords)}
-    )
-
-    # TODO Set transform and crs
-    # uniform_proxy = uniform_proxy.rio.set_spatial_dims('x', 'y')
-    # uniform_proxy = uniform_proxy.rio.write_transform()
-    uniform_proxy = uniform_proxy.rio.set_crs(polygons.crs)
-
-    return uniform_proxy
-
-
 def disaggregate_polygon_to_point(
     data: gpd.GeoDataFrame,
     column: str,
@@ -217,7 +190,7 @@ def disaggregate_polygon_to_point(
 
     # compare crs. If not the same, project data to proxy's crs
     if not proxy.crs == _data.crs:
-        print(
+        logger.info(
             f"CRS of `proxy` ({proxy.crs}) does not match CRS of `data` ({_data.crs}). Reprojecting CRS of `data` to `proxy`'s CRS."
         )
         _data = _data.to_crs(proxy.crs)
@@ -255,7 +228,7 @@ def disaggregate_polygon_to_point(
     points = points[["geometry", "disaggregated"]]
 
     if to_data_crs:
-        print(f"Reprojecting results to `data`'s CRS {_data.crs}.")
+        logger.info(f"Reprojecting results to `data`'s CRS {_data.crs}.")
         points = points.to_crs(_data.crs)
 
     return points

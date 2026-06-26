@@ -1,12 +1,13 @@
 exclude: 'docs|node_modules|migrations|.git|.tox'
 default_stages: [pre-commit]
-fail_fast: true
 
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0
   hooks:
     - id: trailing-whitespace
+      files: (^|/)a/.+\.(py|html|sh|css|js)$
+    - id: end-of-file-fixer
       files: (^|/)a/.+\.(py|html|sh|css|js)$
     - id: check-added-large-files
       args: ["--maxkb=2000"]

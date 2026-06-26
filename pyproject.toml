@@ -5,16 +5,15 @@ authors = [
 ]
 description = "A library for spatial aggregation and disaggregation"
 readme = "README.md"
-version = "0.0.3.dev"
+version = "0.1.0"
 dynamic = ["dependencies", "optional-dependencies"]
 
 # complete classifier list:
 # http://pypi.org/classifiers/
 classifiers = [
-  'Programming Language :: Python :: 3.8',
-  'Programming Language :: Python :: 3.9',
-  'Programming Language :: Python :: 3.10',
-  'Programming Language :: Python :: 3.11',
+  'Programming Language :: Python :: 3.12',
+  'Programming Language :: Python :: 3.13',
+  'Programming Language :: Python :: 3.14',
 ]
 
 keywords = [
@@ -24,9 +23,9 @@ keywords = [
 requires-python = ">=3.8, <4"
 
 [project.urls]
-changelog = "https://github.com/jnnr/gregor/blob/main/CHANGELOG.md"
+changelog = "https://github.com/modelblocks-org/gregor/blob/main/CHANGELOG.md"
 homepage = "https://gregor.readthedocs.io/en/latest/"
-repository = "https://github.com/jnnr/gregor.git"
+repository = "https://github.com/modelblocks-org/gregor.git"
 
 [build-system]
 build-backend = "setuptools.build_meta"

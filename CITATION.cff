@@ -9,7 +9,7 @@ authors:
 title: "Gregor"
 type: software
 license: MIT
-version: 0.0.3.dev
+version: 0.1.0
 doi:
 date-released: 
-url: "https://github.com/jnnr/gregor"
+url: "https://github.com/modelblocks-org/gregor"

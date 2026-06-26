@@ -16,7 +16,7 @@ jobs:
       max-parallel: 1
       matrix:
         os: [ubuntu-latest]
-        python-version: ['3.13']
+        python-version: ['3.12', '3.13', '3.14']
     name: pytest (Python ${{ matrix.python-version }}) (OS ${{ matrix.os }})
 
     # Configure tests
@@ -33,5 +33,4 @@ jobs:
     - name: Test with pytest
       run: |
         # not run benchmark test
-        pytest 
         pytest -vv -m "not benchmark"
