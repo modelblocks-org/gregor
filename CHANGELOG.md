@@ -1,7 +1,7 @@
 Changelog
 =========
 
-v0.0.3.dev
+v0.1.0
 ------------------------------------------------------------
 - Reduce computational load of disaggretation by re-organising code and allowing parallelisation with dask [#18](https://github.com/modelblocks-org/gregor/pull/18).
 - Add a more computationally expensive performance test, which disaggregates rooftop PV capacities in Europe, to be run locally [#18](https://github.com/modelblocks-org/gregor/pull/18).
