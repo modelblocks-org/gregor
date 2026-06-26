@@ -7,6 +7,8 @@ repos:
   hooks:
     - id: trailing-whitespace
       files: (^|/)a/.+\.(py|html|sh|css|js)$
+    - id: end-of-file-fixer
+      files: (^|/)a/.+\.(py|html|sh|css|js)$
     - id: check-added-large-files
       args: ["--maxkb=2000"]
 
