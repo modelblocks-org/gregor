@@ -24,9 +24,9 @@ keywords = [
 requires-python = ">=3.8, <4"
 
 [project.urls]
-changelog = "https://github.com/jnnr/gregor/blob/main/CHANGELOG.md"
+changelog = "https://github.com/modelblocks-org/gregor/blob/main/CHANGELOG.md"
 homepage = "https://gregor.readthedocs.io/en/latest/"
-repository = "https://github.com/jnnr/gregor.git"
+repository = "https://github.com/modelblocks-org/gregor.git"
 
 [build-system]
 build-backend = "setuptools.build_meta"

@@ -8,6 +8,7 @@ v0.1.0
 - Add CI testing [#19](https://github.com/modelblocks-org/gregor/pull/19).
 - Add more unit tests [#17](https://github.com/modelblocks-org/gregor/pull/17).
 - Fix failing aggregation when polygon index is unnamed [#14](https://github.com/modelblocks-org/gregor/pull/14).
+- Move to the [modelblocks-org](https://github.com/modelblocks-org).
 
 
 v0.0.2 (2024-11-21)
