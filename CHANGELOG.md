@@ -1,6 +1,9 @@
 Changelog
 =========
 
+v0.1.1.dev
+------------------------------------------------------------
+
 v0.1.0
 ------------------------------------------------------------
 - Reduce computational load of disaggretation by re-organising code and allowing parallelisation with dask [#18](https://github.com/modelblocks-org/gregor/pull/18).
