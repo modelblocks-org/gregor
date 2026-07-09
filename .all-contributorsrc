@@ -19,6 +19,15 @@
         "review",
         "code"
       ]
+    },
+    {
+      "login": "brynpickering",
+      "name": "Bryn Pickering",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17178478?v=4",
+      "profile": "https://github.com/brynpickering",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
