@@ -27,6 +27,31 @@ def test_disaggregate_2x2(dummy_raster, square_segmentation_2x2):
     assert np.allclose(disaggregated.values, expected)
 
 
+def test_disaggregate_2x2_proxy_with_nan(dummy_raster, square_segmentation_2x2):
+    """Confirm that disaggregation works when the proxy raster has NaN values."""
+    data = square_segmentation_2x2
+
+    dummy_raster.values[3, 0] = np.nan  # Set one of the proxy values to NaN
+    dummy_raster.values[0, 1] = np.nan  # Set another one of the proxy values to NaN
+
+    data["value"] = [2, 2, 2, 2]
+
+    expected = [
+        [0.72727273, np.nan, 0.0, 0.0],
+        [0.54545455, 0.72727273, 1.0, 1.0],
+        [2.0, 0.0, 0.25, 0.75],
+        [np.nan, 0.0, 0.25, 0.75],
+    ]
+
+    disaggregated = disaggregate_polygon_to_raster(
+        data=data, column="value", proxy=dummy_raster
+    )
+
+    assert (disaggregated.coarsen(x=2, y=2).sum().values == [[2, 2], [2, 2]]).all()
+
+    assert np.allclose(disaggregated.values, expected, equal_nan=True)
+
+
 def test_disaggregate_3x3():
     pass
 
