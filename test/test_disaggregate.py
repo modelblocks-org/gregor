@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from gregor.disaggregate import (
     disaggregate_polygon_to_point,
@@ -48,6 +49,36 @@ def test_disaggregate_2x2_proxy_with_nan(dummy_raster, square_segmentation_2x2):
     )
 
     assert (disaggregated.coarsen(x=2, y=2).sum().values == [[2, 2], [2, 2]]).all()
+
+    assert np.allclose(disaggregated.values, expected, equal_nan=True)
+
+
+def test_disaggregate_2x2_proxy_non_covering(dummy_raster, square_segmentation_2x2):
+    """
+    Disaggregation works when raster proxy does not fully cover the polygons,
+    but a warning is issued.
+    """
+    data = square_segmentation_2x2
+
+    # drop the left-most pixels of the raster,
+    # so that the left two squares are not fully covered.
+    dummy_raster = dummy_raster[:, 1:]
+
+    data["value"] = [2, 2, 2, 2]
+
+    expected = [
+        [0, 0.0, 0.0],
+        [2, 1.0, 1.0],
+        [np.nan, 0.25, 0.75],
+        [np.nan, 0.25, 0.75],
+    ]
+
+    # TODO: warn if the proxy does not cover the polygons fully, but keep running.
+    # TODO: warn if a polygon has no non-zero proxy values.
+    with pytest.warns(UserWarning):
+        disaggregated = disaggregate_polygon_to_raster(
+            data=data, column="value", proxy=dummy_raster
+        )
 
     assert np.allclose(disaggregated.values, expected, equal_nan=True)
 
